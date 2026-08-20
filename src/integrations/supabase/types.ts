@@ -14,7 +14,90 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          age: number | null
+          avatar_url: string | null
+          created_at: string
+          email_reports: boolean
+          full_name: string | null
+          goals: string | null
+          id: string
+          skin_type: string | null
+          updated_at: string
+          weekly_reminders: boolean
+        }
+        Insert: {
+          age?: number | null
+          avatar_url?: string | null
+          created_at?: string
+          email_reports?: boolean
+          full_name?: string | null
+          goals?: string | null
+          id: string
+          skin_type?: string | null
+          updated_at?: string
+          weekly_reminders?: boolean
+        }
+        Update: {
+          age?: number | null
+          avatar_url?: string | null
+          created_at?: string
+          email_reports?: boolean
+          full_name?: string | null
+          goals?: string | null
+          id?: string
+          skin_type?: string | null
+          updated_at?: string
+          weekly_reminders?: boolean
+        }
+        Relationships: []
+      }
+      scans: {
+        Row: {
+          created_at: string
+          error: string | null
+          id: string
+          image_path: string | null
+          metrics: Json | null
+          questionnaire: Json
+          recommendations: Json | null
+          status: string
+          summary: string | null
+          updated_at: string
+          user_id: string
+          wellness_score: number | null
+        }
+        Insert: {
+          created_at?: string
+          error?: string | null
+          id?: string
+          image_path?: string | null
+          metrics?: Json | null
+          questionnaire?: Json
+          recommendations?: Json | null
+          status?: string
+          summary?: string | null
+          updated_at?: string
+          user_id: string
+          wellness_score?: number | null
+        }
+        Update: {
+          created_at?: string
+          error?: string | null
+          id?: string
+          image_path?: string | null
+          metrics?: Json | null
+          questionnaire?: Json
+          recommendations?: Json | null
+          status?: string
+          summary?: string | null
+          updated_at?: string
+          user_id?: string
+          wellness_score?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
