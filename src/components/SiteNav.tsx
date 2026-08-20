@@ -39,7 +39,7 @@ export function SiteNav() {
             <li key={l.label}>
               <Link
                 to={l.to}
-                hash={l.hash}
+                {...(l.hash ? { hash: l.hash } : {})}
                 className="text-sm text-muted-foreground transition-colors duration-300 hover:text-foreground"
               >
                 {l.label}
@@ -72,7 +72,7 @@ export function SiteNav() {
               <li key={l.label}>
                 <Link
                   to={l.to}
-                  hash={l.hash}
+                  {...(l.hash ? { hash: l.hash } : {})}
                   onClick={() => setOpen(false)}
                   className="text-base text-muted-foreground transition-colors hover:text-foreground"
                 >
