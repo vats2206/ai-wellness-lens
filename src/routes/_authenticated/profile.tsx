@@ -40,6 +40,8 @@ function ProfilePage() {
   const [age, setAge] = useState("");
   const [skinType, setSkinType] = useState("");
   const [goals, setGoals] = useState("");
+  const [upgradeEmail, setUpgradeEmail] = useState("");
+  const [upgradePassword, setUpgradePassword] = useState("");
 
   useEffect(() => {
     const p = profileQuery.data;
@@ -71,12 +73,76 @@ function ProfilePage() {
     onError: (e: Error) => toast.error(e.message),
   });
 
+  const isGuest = !user?.email;
+
+  const upgrade = useMutation({
+    mutationFn: async () => {
+      const { error } = await supabase.auth.updateUser({
+        email: upgradeEmail,
+        password: upgradePassword,
+      });
+      if (error) throw error;
+    },
+    onSuccess: () => toast.success("Account saved. You can now sign in with that email."),
+    onError: (e: Error) => toast.error(e.message),
+  });
+
   return (
     <div className="animate-fade-rise space-y-5">
       <div>
         <p className="text-xs tracking-[0.3em] text-muted-foreground uppercase">Profile</p>
         <h1 className="font-display mt-3 text-4xl sm:text-5xl">Your details</h1>
       </div>
+
+      {isGuest && (
+        <form
+          className="glass-card max-w-2xl space-y-4 p-8"
+          onSubmit={(e) => {
+            e.preventDefault();
+            upgrade.mutate();
+          }}
+        >
+          <div>
+            <p className="text-xs tracking-[0.25em] text-muted-foreground uppercase">Guest mode</p>
+            <p className="mt-3 text-sm text-muted-foreground">
+              You're exploring as a guest. Add an email and password to keep your scans forever.
+            </p>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="upgradeEmail">Email</Label>
+            <Input
+              id="upgradeEmail"
+              type="email"
+              required
+              value={upgradeEmail}
+              onChange={(e) => setUpgradeEmail(e.target.value)}
+              className="glass"
+              placeholder="you@example.com"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="upgradePassword">Password</Label>
+            <Input
+              id="upgradePassword"
+              type="password"
+              required
+              minLength={6}
+              value={upgradePassword}
+              onChange={(e) => setUpgradePassword(e.target.value)}
+              className="glass"
+              placeholder="••••••••"
+            />
+          </div>
+          <Button
+            type="submit"
+            disabled={upgrade.isPending}
+            className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+          >
+            {upgrade.isPending ? "Saving…" : "Save my account"}
+          </Button>
+        </form>
+      )}
+
 
       <form
         className="glass-card max-w-2xl space-y-5 p-8"

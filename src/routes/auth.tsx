@@ -86,6 +86,20 @@ function AuthPage() {
     navigate({ to: target });
   };
 
+  const guest = async () => {
+    setBusy(true);
+    try {
+      const { error } = await supabase.auth.signInAnonymously({
+        options: { data: { full_name: "Guest" } },
+      });
+      if (error) throw error;
+      toast.success("Exploring as guest.");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Guest sign-in failed");
+      setBusy(false);
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-5 py-16">
       <div className="glass-card animate-fade-rise w-full max-w-md p-8 sm:p-10">
@@ -167,6 +181,19 @@ function AuthPage() {
         >
           Continue with Google
         </Button>
+
+        <Button
+          variant="ghost"
+          onClick={guest}
+          disabled={busy}
+          className="glass mt-3 w-full rounded-full text-foreground hover:bg-transparent"
+        >
+          Continue as guest
+        </Button>
+        <p className="mt-3 text-center text-xs text-muted-foreground">
+          Guest mode unlocks every feature. Add an email later to keep your history.
+        </p>
+
 
         <button
           onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
