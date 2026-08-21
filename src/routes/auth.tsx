@@ -86,6 +86,20 @@ function AuthPage() {
     navigate({ to: target });
   };
 
+  const guest = async () => {
+    setBusy(true);
+    try {
+      const { error } = await supabase.auth.signInAnonymously({
+        options: { data: { full_name: "Guest" } },
+      });
+      if (error) throw error;
+      toast.success("Exploring as guest.");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Guest sign-in failed");
+      setBusy(false);
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-5 py-16">
       <div className="glass-card animate-fade-rise w-full max-w-md p-8 sm:p-10">
