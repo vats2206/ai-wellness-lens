@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
 import { Route as AuthenticatedScanRouteImport } from './routes/_authenticated/scan'
+import { Route as AuthenticatedReportsScanIdRouteImport } from './routes/_authenticated/reports.$scanId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -45,6 +46,12 @@ const AuthenticatedScanRoute = AuthenticatedScanRouteImport.update({
   path: '/scan',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedReportsScanIdRoute =
+  AuthenticatedReportsScanIdRouteImport.update({
+    id: '/reports/$scanId',
+    path: '/reports/$scanId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -52,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/history': typeof AuthenticatedHistoryRoute
   '/scan': typeof AuthenticatedScanRoute
+  '/reports/$scanId': typeof AuthenticatedReportsScanIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -59,6 +67,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/history': typeof AuthenticatedHistoryRoute
   '/scan': typeof AuthenticatedScanRoute
+  '/reports/$scanId': typeof AuthenticatedReportsScanIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -68,12 +77,14 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/history': typeof AuthenticatedHistoryRoute
   '/_authenticated/scan': typeof AuthenticatedScanRoute
+  '/_authenticated/reports/$scanId': typeof AuthenticatedReportsScanIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard' | '/history' | '/scan'
+  fullPaths:
+    '/' | '/auth' | '/dashboard' | '/history' | '/scan' | '/reports/$scanId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/history' | '/scan'
+  to: '/' | '/auth' | '/dashboard' | '/history' | '/scan' | '/reports/$scanId'
   id:
     | '__root__'
     | '/'
@@ -82,6 +93,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/history'
     | '/_authenticated/scan'
+    | '/_authenticated/reports/$scanId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -134,6 +146,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedScanRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/reports/$scanId': {
+      id: '/_authenticated/reports/$scanId'
+      path: '/reports/$scanId'
+      fullPath: '/reports/$scanId'
+      preLoaderRoute: typeof AuthenticatedReportsScanIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -141,12 +160,14 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedHistoryRoute: typeof AuthenticatedHistoryRoute
   AuthenticatedScanRoute: typeof AuthenticatedScanRoute
+  AuthenticatedReportsScanIdRoute: typeof AuthenticatedReportsScanIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedHistoryRoute: AuthenticatedHistoryRoute,
   AuthenticatedScanRoute: AuthenticatedScanRoute,
+  AuthenticatedReportsScanIdRoute: AuthenticatedReportsScanIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
