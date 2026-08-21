@@ -40,6 +40,8 @@ function ProfilePage() {
   const [age, setAge] = useState("");
   const [skinType, setSkinType] = useState("");
   const [goals, setGoals] = useState("");
+  const [upgradeEmail, setUpgradeEmail] = useState("");
+  const [upgradePassword, setUpgradePassword] = useState("");
 
   useEffect(() => {
     const p = profileQuery.data;
