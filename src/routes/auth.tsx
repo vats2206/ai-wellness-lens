@@ -168,6 +168,19 @@ function AuthPage() {
           Continue with Google
         </Button>
 
+        <Button
+          variant="ghost"
+          onClick={guest}
+          disabled={busy}
+          className="glass mt-3 w-full rounded-full text-foreground hover:bg-transparent"
+        >
+          Continue as guest
+        </Button>
+        <p className="mt-3 text-center text-xs text-muted-foreground">
+          Guest mode unlocks every feature. Add an email later to keep your history.
+        </p>
+
+
         <button
           onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
           className="mt-6 w-full text-center text-sm text-muted-foreground transition-colors hover:text-foreground"
