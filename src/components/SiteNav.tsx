@@ -8,6 +8,7 @@ const links = [
   { label: "Features", to: "/" as const, hash: "features" },
   { label: "AI Analysis", to: "/" as const, hash: "ai-analysis" },
   { label: "Dashboard", to: "/dashboard" as const, hash: undefined },
+  { label: "Reviews", to: "/" as const, hash: "reviews" },
   { label: "Pricing", to: "/" as const, hash: "pricing" },
   { label: "Contact", to: "/" as const, hash: "contact" },
 ];
@@ -50,10 +51,11 @@ export function SiteNav() {
 
         <div className="flex items-center gap-2">
           <Button
+            asChild
             size="sm"
             className="hidden rounded-full bg-primary px-5 text-primary-foreground transition-transform duration-300 hover:scale-[1.03] hover:bg-primary/90 active:scale-95 sm:inline-flex"
           >
-            Start Your Scan
+            <Link to="/scan">Start Your Scan</Link>
           </Button>
           <button
             aria-label="Toggle menu"
@@ -81,8 +83,13 @@ export function SiteNav() {
               </li>
             ))}
           </ul>
-          <Button className="mt-5 w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
-            Start Your Scan
+          <Button
+            asChild
+            className="mt-5 w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+          >
+            <Link to="/scan" onClick={() => setOpen(false)}>
+              Start Your Scan
+            </Link>
           </Button>
         </div>
       )}

@@ -3,6 +3,10 @@ import { ScanFace, Sparkles, LineChart, ShieldCheck, Play, ArrowRight } from "lu
 import { SiteNav } from "@/components/SiteNav";
 import { Button } from "@/components/ui/button";
 import heroVideo from "../../public/hero.mp4.asset.json";
+import scanVisual from "@/assets/scan-visual.jpg";
+import review1 from "@/assets/review-1.jpg";
+import review2 from "@/assets/review-2.jpg";
+import review3 from "@/assets/review-3.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -61,6 +65,30 @@ const tiers = [
   { name: "Clinic", price: "Custom", note: "Multi-user cohorts and API access.", cta: "Talk to us" },
 ];
 
+const reviews = [
+  {
+    name: "Elena Marchetti",
+    role: "Founder, Aeris Studio",
+    avatar: review1,
+    quote:
+      "I stopped guessing. Two scans in, Vision-Fit flagged the sleep debt behind my skin flare-ups — the weekly trend line is now part of my Monday ritual.",
+  },
+  {
+    name: "David Renner",
+    role: "Endurance athlete",
+    avatar: review2,
+    quote:
+      "The recovery metric tracks almost perfectly with my training load. It is the first wellness tool I have kept using past week three.",
+  },
+  {
+    name: "Mira Okafor",
+    role: "Clinical dermatology nurse",
+    avatar: review3,
+    quote:
+      "The reports are specific, measured and never overstate themselves. I recommend it to patients who want structure between appointments.",
+  },
+];
+
 function Index() {
   return (
     <div className="min-h-screen bg-background">
@@ -97,17 +125,21 @@ function Index() {
             style={{ animationDelay: "360ms" }}
           >
             <Button
+              asChild
               size="lg"
               className="w-full rounded-full bg-primary px-8 text-primary-foreground transition-transform duration-300 hover:scale-[1.03] hover:bg-primary/90 active:scale-95 sm:w-auto"
             >
-              Start Your Scan
+              <Link to="/scan">Start Your Scan</Link>
             </Button>
             <Button
+              asChild
               size="lg"
               variant="ghost"
               className="glass w-full rounded-full px-8 text-foreground transition-transform duration-300 hover:scale-[1.03] hover:bg-transparent active:scale-95 sm:w-auto"
             >
-              <Play className="mr-2 size-4" /> Watch Demo
+              <Link to="/" hash="ai-analysis">
+                <Play className="mr-2 size-4" /> Watch Demo
+              </Link>
             </Button>
           </div>
         </div>
@@ -148,6 +180,14 @@ function Index() {
             </Link>
           </div>
           <div className="space-y-4">
+            <img
+              src={scanVisual}
+              alt="Close-up of a face lit by Vision-Fit scanning light during an AI wellness analysis"
+              loading="lazy"
+              width={1024}
+              height={1024}
+              className="h-44 w-full rounded-2xl object-cover"
+            />
             {[
               ["Hydration", 82],
               ["Recovery", 68],
@@ -171,6 +211,35 @@ function Index() {
         </div>
       </section>
 
+      <section id="reviews" className="mx-auto max-w-6xl px-6 py-20">
+        <h2 className="font-display text-4xl sm:text-5xl">
+          Trusted by people who <span className="text-muted-foreground italic">keep score.</span>
+        </h2>
+        <div className="mt-14 grid gap-5 lg:grid-cols-3">
+          {reviews.map((r) => (
+            <figure key={r.name} className="glass-card flex flex-col p-8">
+              <blockquote className="flex-1 text-sm leading-relaxed text-muted-foreground">
+                “{r.quote}”
+              </blockquote>
+              <figcaption className="mt-7 flex items-center gap-4">
+                <img
+                  src={r.avatar}
+                  alt={`Portrait of ${r.name}`}
+                  loading="lazy"
+                  width={512}
+                  height={512}
+                  className="size-11 rounded-full object-cover"
+                />
+                <div>
+                  <p className="text-sm">{r.name}</p>
+                  <p className="text-xs text-muted-foreground">{r.role}</p>
+                </div>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
       <section id="pricing" className="mx-auto max-w-6xl px-6 py-28">
         <h2 className="font-display text-4xl sm:text-5xl">
           Pricing, <span className="text-muted-foreground italic">simply.</span>
@@ -190,6 +259,7 @@ function Index() {
               </p>
               <p className="mt-4 flex-1 text-sm text-muted-foreground">{t.note}</p>
               <Button
+                asChild
                 variant={t.featured ? "default" : "ghost"}
                 className={`mt-8 rounded-full transition-transform duration-300 hover:scale-[1.03] active:scale-95 ${
                   t.featured
@@ -197,7 +267,7 @@ function Index() {
                     : "glass text-foreground hover:bg-transparent"
                 }`}
               >
-                {t.cta}
+                <Link to="/scan">{t.cta}</Link>
               </Button>
             </div>
           ))}
@@ -213,10 +283,11 @@ function Index() {
             Thirty seconds today becomes a year of clarity. Reach us at hello@vision-fit.ai.
           </p>
           <Button
+            asChild
             size="lg"
             className="mt-9 rounded-full bg-primary px-8 text-primary-foreground transition-transform duration-300 hover:scale-[1.03] hover:bg-primary/90 active:scale-95"
           >
-            Start Your Scan
+            <Link to="/scan">Start Your Scan</Link>
           </Button>
         </div>
       </section>
